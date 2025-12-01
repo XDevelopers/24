@@ -17,7 +17,7 @@ const sendEmail = async (to, text) => {
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: to,
-      subject: "Your OTP Code",
+      subject: "Your OTP Code", 
       text: text,
     });
 

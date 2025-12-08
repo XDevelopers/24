@@ -1,6 +1,7 @@
 import { Router } from "express";
-import {InActiveRegister, InactiveToActive, Login} from "../controllers/Register.js";
+// import {InActiveRegister, InactiveToActive, Login} from "../controllers/Register.js";
 import { IsAuthenticated } from "../meddleWare/Authenticated.js";
+import {InActiveRegister} from '../controllers/User/regester.controller.js'
 
 const router = Router();
 
@@ -9,8 +10,8 @@ const router = Router();
 // router.route("/activeRegister").post(IsAuthenticated);
 // router.route("/otpValidation").post(IsAuthenticated, verif);
 router.route("/register").post(InActiveRegister);
-router.route("/login").post(Login);
-router.route("/changeusertypeadmin").post(Login);
+// router.route("/login").post(Login);
+// router.route("/changeusertypeadmin").post(Login);
 // router.route("/logout").post(logoutUser)
 
 export default router;

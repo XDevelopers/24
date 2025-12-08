@@ -1,4 +1,4 @@
-const UserIds = {
+const Role = {
   SuperAdmin: 1,
   Admin: 2,
   Seller: 3,
@@ -21,4 +21,4 @@ const ProductStatus = {
   Rejected: 3,
 };
 
-export { UserIds, DeliveryStatus,UserStatus,ProductStatus };
+export { Role, DeliveryStatus,UserStatus,ProductStatus };

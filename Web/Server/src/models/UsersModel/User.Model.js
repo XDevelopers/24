@@ -9,7 +9,6 @@ const UserSchema = new mongoose.Schema({
   },
   isverifyed: {
     type: Number,
-    required: true,
     enum: [1, 2],
   },
   email: {
@@ -26,13 +25,34 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userid: { $inc: { seq: 1 } },
-  new: true, // returns the incremented document
+  userid: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
 });
 
 UserSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+const CounterSchema = new mongoose.Schema({
+  id: { type: String, required: true },
+  seq: { type: Number, default: 0 },
+});
+
+const Counter = mongoose.model("Counter", CounterSchema);
+
+UserSchema.pre("save", async function (next) {
+  if (!this.isNew) return next();
+
+  const counter = await Counter.findOneAndUpdate(
+    { id: "userid" },
+    { $inc: { seq: 1 } },
+    { new: true, upsert: true }
+  );
+  this.userid = counter.seq;
+  next();
+});
 
 UserSchema.methods.generateAccessToken = function () {
   return jwt.sign(
